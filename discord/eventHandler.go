@@ -120,8 +120,8 @@ func (bot *Bot) SubscribeToGameByConnectCode(guildID, connectCode string, endGam
 					correlatedUserID = userID
 				case task.GameOverJob:
 					var gameOverResult game.Gameover
-					log.Println("Successfully identified game over event:")
-					log.Println(job.Payload)
+					// log.Println("Successfully identified game over event:")
+					// log.Println(job.Payload)
 					err := json.Unmarshal([]byte(job.Payload.(string)), &gameOverResult)
 					if err != nil {
 						log.Println(err)
@@ -381,6 +381,10 @@ func (bot *Bot) processTransition(phase game.Phase, dgsRequest GameStateRequest)
 			metrics.RecordDiscordRequests(bot.RedisInterface.client, metrics.MessageEdit, 1)
 		}
 		bot.applyToAll(dgs, false, false)
+		// on a gameover event from the capture, it's like going to the lobby; use that delay
+	case game.GAMEOVER:
+		phase = game.LOBBY
+		fallthrough
 	case game.LOBBY:
 		delay := sett.Delays.GetDelay(oldPhase, phase)
 		bot.handleTrackedMembers(bot.PrimarySession, sett, delay, NoPriority, dgsRequest)
@@ -473,7 +477,7 @@ func dumpGameToPostgres(dgs GameState, psql *storage.PsqlInterface, gameOver gam
 		gameOver.GameOverReason == game.ImpostorDisconnect
 
 	for _, v := range dgs.UserData {
-		if v.GetPlayerName() != amongus.UnlinkedPlayerName && v.GetPlayerName() != amongus.SpectatorPlayerName {
+		if v.GetPlayerName() != amongus.UnlinkedPlayerName {
 			inGameData, found := dgs.AmongUsData.GetByName(v.GetPlayerName())
 			if !found {
 				log.Println("No game data found for that player")

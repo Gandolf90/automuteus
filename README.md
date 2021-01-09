@@ -78,11 +78,6 @@ The bot will send you a private message (make sure your Discord settings allow D
 
 If you want to view command usage or see the available options, type `.au` or `.au help` in your Discord channel.
 
-## Galactus
-
-Galactus is a program used to speed up muting and deafening (which is typically constrained by Discord rate-limits). It allows for an arbitrary number of tokens to be provided for faster muting/deafening, but also supports capture-side bots.
-A guide to setup your own capture-side bot can be found [here,](https://youtu.be/jKcEW5qpk8E) and the repo for Galactus is [here.](https://github.com/automuteus/galactus)
-
 ## Commands
 
 The Discord Bot uses the `.au` prefix for any commands by default; if you change your prefix remember to replace `.au` with your custom prefix. If you forget your prefix, you can @mention the bot and it will respond with whatever it's prefix currently is.
@@ -151,6 +146,10 @@ unRAID hosting steps are are not yet updated for v3.0+ of AutoMuteUs, and as suc
 
 Heroku hosting steps are are not yet updated for v3.0+ of AutoMuteUs, and as such is not supported at this time.
 
+## FreeBSD
+
+AutoMuteUs exists in the FreeBSD Ports tree as [`games/automuteus`](https://www.freshports.org/games/automuteus/). Instructions are included in the Port.
+
 ## Old version
 If, for whatever reason, you _really_ want to self host, but also don't want to figure out Docker or use Windows and hate Docker because of it (I don't blame you) you can self host [2.4.3](https://github.com/denverquane/automuteus/releases/tag/2.4.3) instead. **If you are using this method, continue using the newest capture!**
 
@@ -177,11 +176,17 @@ If, for whatever reason, you _really_ want to self host, but also don't want to 
 - `CAPTURE_TIMEOUT`: How many seconds of no capture events received before the Bot will terminate the associated game/connection. Defaults to 36000 seconds.
 - `REDIS_PASS`: Your Redis database password, if necessary.
 - `AUTOMUTEUS_LISTENING`: What the bot displays it is "Listening to" in the online presence message. Recommend putting your custom command prefix here
+- `AUTOMUTEUS_GLOBAL_PREFIX`: A universal default for the bot's command prefix. The bot will respond to **both** this prefix, and any guild-specific prefixes set in settings.
 
 ### HIGHLY advanced. Probably don't ever touch these!
 
 - `NUM_SHARDS`: Num shards provided to the Discord API.
 - `SHARD_ID`: Shard ID used to identify with the Discord API. Needs to be strictly less than `NUM_SHARDS`
+
+## Galactus
+
+Galactus is a program used to speed up muting and deafening (which is typically constrained by Discord rate-limits). It allows for an arbitrary number of tokens to be provided for faster muting/deafening, but also supports capture-side bots.
+A guide to setup your own capture-side bot can be found [here,](https://youtu.be/jKcEW5qpk8E) and the repo for Galactus is [here.](https://github.com/automuteus/galactus)
 
 # Similar Projects
 

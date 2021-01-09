@@ -113,16 +113,20 @@ func MakeAndStartBot(version, commit, botToken, url, emojiGuildID string, extraT
 
 	listeningTo := os.Getenv("AUTOMUTEUS_LISTENING")
 	if listeningTo == "" {
-		listeningTo = ".au help"
+		prefix := os.Getenv("AUTOMUTEUS_GLOBAL_PREFIX")
+		if prefix == "" {
+			prefix = ".au"
+		}
+
+		listeningTo = prefix + " help"
 	}
 
 	status := &discordgo.UpdateStatusData{
 		IdleSince: nil,
-		Activities: &[]discordgo.Game{
-			{
-				Name: listeningTo,
-				Type: discordgo.GameTypeListening,
-			}},
+		Game: &discordgo.Game{
+			Name: listeningTo,
+			Type: discordgo.GameTypeListening,
+		},
 		AFK:    false,
 		Status: "",
 	}
